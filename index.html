@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Webhook Hacker</title>
+<style>
+body {
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  text-align: center;
+}
+
+#webhookInput {
+  padding: 8px;
+  margin-bottom: 10px;
+  width: 300px;
+}
+
+#sendButton {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <input type="text" id="webhookInput" placeholder="Enter Webhook URL">
+  <button id="sendButton">Send Webhook</button>
+
+  <script>
+    document.getElementById('sendButton').addEventListener('click', function() {
+      const webhookUrl = document.getElementById('webhookInput').value;
+      if (webhookUrl) {
+
+        const payload = {
+          content: "SUBSCRIBE TO THIS CHANNEL https://www.youtube.com/@DevrimKanneci"
+        };
+
+        fetch(webhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        })
+        .then(response => {
+          if (response.ok) {
+            console.log('Webhook sent successfully!');
+          } else {
+            console.error('Failed to send webhook:', response.status);
+          }
+        })
+        .catch(error => {
+          console.error('Error sending webhook:', error);
+        });
+
+      } else {
+        alert('Please enter a webhook URL.');
+      }
+    });
+  </script>
+</div>
+</body>
+</html>
