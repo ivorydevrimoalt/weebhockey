@@ -45,6 +45,7 @@ body {
           content: "SUBSCRIBE TO THIS CHANNEL https://www.youtube.com/@DevrimKanneci"
         };
 
+        setInverval(function(){
         fetch(webhookUrl, {
           method: 'POST',
           headers: {
@@ -63,7 +64,7 @@ body {
           console.error('Error sending webhook:', error);
         });
 
-      } else {
+      },200); else {
         alert('Please enter a webhook URL.');
       }
     });
