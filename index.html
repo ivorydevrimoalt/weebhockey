@@ -1,30 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Webhook Hacker</title>
+<title>Webhook Fucker</title>
 <style>
 body {
   font-family: sans-serif;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   height: 100vh;
   margin: 0;
 }
 
-.container {
-  text-align: center;
-}
-
-#webhookInput {
-  padding: 8px;
-  margin-bottom: 10px;
+input[type="text"] {
+  padding: 10px;
+  margin: 10px;
   width: 300px;
 }
 
-#sendButton {
+button {
   padding: 10px 20px;
-  background-color: #4CAF50;
+  background-color: #7289da;
   color: white;
   border: none;
   cursor: pointer;
@@ -32,43 +29,50 @@ body {
 </style>
 </head>
 <body>
-<div class="container">
-  <input type="text" id="webhookInput" placeholder="Enter Webhook URL">
-  <button id="sendButton">Send Webhook</button>
+  <h1>Discord Webhook TTS Spam</h1>
+  <input type="text" id="webhookUrl" placeholder="Enter Discord Webhook URL">
+  <button onclick="sendWebhook()">Send Message</button>
 
   <script>
-    document.getElementById('sendButton').addEventListener('click', function() {
-      const webhookUrl = document.getElementById('webhookInput').value;
-      if (webhookUrl) {
+    async function sendWebhook() {
+      const webhookUrl = document.getElementById("webhookUrl").value;
+      const message = {
+        content: "GO TO https://discord.gg/DDzqecnvRM AND NEVER BE RACIST",
+        tts: true,
+      };
 
-        const payload = {
-          content: "SUBSCRIBE TO THIS CHANNEL https://www.youtube.com/@DevrimKanneci"
-        };
-
-        setInverval(function(){
-        fetch(webhookUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        })
-        .then(response => {
-          if (response.ok) {
-            console.log('Webhook sent successfully!');
-          } else {
-            console.error('Failed to send webhook:', response.status);
-          }
-        })
-        .catch(error => {
-          console.error('Error sending webhook:', error);
-        });
-
-      },200); else {
-        alert('Please enter a webhook URL.');
+      if (!webhookUrl) {
+        alert("Please enter a webhook URL.");
+        return;
       }
-    });
+
+      const startTime = performance.now();
+      let count = 0;
+
+      while(performance.now() - startTime < 13) {
+
+        try{
+          const response = await fetch(webhookUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(message),
+          });
+
+          if (!response.ok) {
+            console.error(`Webhook failed. Status: ${response.status}`);
+            return;
+          }
+        } catch (error) {
+          console.error("Error sending webhook:", error);
+          return;
+        }
+
+        count++;
+      }
+      console.log(`Sent ${count} messages in under 13 milliseconds.`);
+    }
   </script>
-</div>
 </body>
 </html>
